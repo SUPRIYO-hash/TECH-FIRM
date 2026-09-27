@@ -50,7 +50,7 @@ export function CookieBanner({ onOpenCookiePolicy }: CookieBannerProps) {
     <div
       role="region"
       aria-label="Cookie and Privacy Consent"
-      className="fixed bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:max-w-md z-50 p-5 rounded-2xl bg-[#0B0F19] border border-neutral-800 shadow-2xl text-neutral-300 text-xs animate-in fade-in slide-in-from-bottom-2 duration-300"
+      className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 p-5 rounded-2xl bg-[#0B0F19] border border-neutral-800 shadow-2xl text-neutral-300 text-xs animate-in fade-in slide-in-from-bottom-2 duration-300"
     >
       <div className="flex items-start gap-3 mb-3">
         <div className="p-2 rounded-lg bg-neutral-900 border border-neutral-800 text-sky-400 shrink-0">

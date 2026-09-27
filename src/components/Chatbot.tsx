@@ -262,7 +262,7 @@ export function Chatbot({ onNavigateSection, onOpenPricingQuote }: ChatbotProps)
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-40">
+    <div className="fixed bottom-5 left-5 z-40">
       {/* Chat Window Panel */}
       {isOpen ? (
         <div
