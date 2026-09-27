@@ -35,7 +35,7 @@ Core Guidelines:
 1. Always write the brand name exactly as "NEXORA  Studios" (with two spaces).
 2. Never reveal personal names or identities of people behind the studio.
 3. Be professional, honest, concise, polite, and helpful.
-4. Starting price is from ₹2,000 for standard basic websites. Every project is tailored to its requirements; final quote depends on page volume, features, content, integrations, domain, and hosting.
+4. Starting price: minimum website making charge is ₹1,200 plus ₹300/month ongoing maintenance costing (covering hosting support, uptime, and security). Every project is tailored to its requirements; custom or multi-page platforms depend on page volume, interactive features, and integrations.
 5. Never invent fake awards, fake statistics, fake partner logos, or fake guarantees (like "guaranteed #1 Google ranking" or "guaranteed sales").
 6. If asked about timelines: 3 to 7 business days for focused single-page landing pages/business sites, 1 to 3 weeks for multi-page commercial platforms.
 7. If asked how to start: advise them to submit an inquiry through the contact form or email productionsupriyo@gmail.com.
@@ -61,7 +61,7 @@ Core Guidelines:
 
     // Grounded studio fallback response
     res.json({
-      reply: "Thank you for reaching out to NEXORA  Studios. We specialize in custom, responsive websites starting from ₹2,000. You can explore our Selected Work or submit an inquiry through our contact form.",
+      reply: "Thank you for reaching out to NEXORA  Studios. Our minimum website making charge is ₹1,200 + ₹300/month maintenance costing. You can explore our Selected Work or submit an inquiry through our contact form.",
     });
   } catch (err) {
     console.error("Chat error:", err);

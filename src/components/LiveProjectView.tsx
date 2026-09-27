@@ -15,10 +15,23 @@ export function LiveProjectView({ project, onClose }: LiveProjectViewProps) {
   const [deviceScale, setDeviceScale] = useState<"desktop" | "tablet" | "mobile">("desktop");
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Specific state for Aura Wellness
+  // Specific state for Salon Website & Management Dashboard
+  const [salonMode, setSalonMode] = useState<"storefront" | "dashboard">("storefront");
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
-  const [selectedService, setSelectedService] = useState("Cellular Glow Facial (60 min - ₹2,400)");
+  const [selectedService, setSelectedService] = useState("Signature Executive Haircut (₹450)");
+  const [selectedStylist, setSelectedStylist] = useState("Rahul (Senior Barber)");
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState("03:30 PM");
+  const [clientName, setClientName] = useState("");
+  const [clientPhone, setClientPhone] = useState("");
+  const [appointmentsQueue, setAppointmentsQueue] = useState([
+    { id: "APT-101", time: "11:00 AM", client: "Vikram Sen", service: "Executive Haircut + Beard Taper", stylist: "Rahul", status: "Completed", amount: "₹650" },
+    { id: "APT-102", time: "01:30 PM", client: "Amitav Roy", service: "Keratin Protein Hair Spa", stylist: "Sneha", status: "In-Chair", amount: "₹1,200" },
+    { id: "APT-103", time: "02:45 PM", client: "Kunal Chatterjee", service: "Beard Sculpting & Razor Finish", stylist: "Arjun", status: "In-Chair", amount: "₹300" },
+    { id: "APT-104", time: "03:30 PM", client: "Rohan Mukherjee", service: "Haircut & Beard Combo", stylist: "Rahul", status: "Confirmed", amount: "₹750" },
+    { id: "APT-105", time: "04:15 PM", client: "Debashis Pal", service: "Global Hair Color & Styling", stylist: "Sneha", status: "Confirmed", amount: "₹2,100" },
+    { id: "APT-106", time: "05:00 PM", client: "Sanjay Sharma", service: "Walk-in: Classic Haircut", stylist: "Arjun", status: "Waiting Queue", amount: "₹400" },
+  ]);
 
   // Specific state for Kaviar Bistro
   const [menuTab, setMenuTab] = useState<"brunch" | "dinner" | "coffee">("brunch");
@@ -136,154 +149,549 @@ export function LiveProjectView({ project, onClose }: LiveProjectViewProps) {
           </div>
 
           {/* PROJECT-SPECIFIC FULL LIVE RENDER */}
-          {project.id === "aura-wellness" && (
+          {project.id === "salon-dashboard" && (
             <div className="bg-[#0B0F19] text-neutral-200 min-h-screen">
-              {/* Aura Header */}
-              <nav className="border-b border-white/[0.08] px-6 py-4 flex items-center justify-between bg-[#0B0F19]/90 backdrop-blur sticky top-0 z-20">
+              {/* Reference Header Banner */}
+              <div className="bg-sky-950/50 border-b border-sky-500/20 px-6 py-3 text-xs flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-3 h-3 rounded-full bg-sky-400" />
-                  <span className="font-serif text-lg tracking-wider text-white font-semibold">AURA WELLNESS</span>
-                </div>
-                <div className="hidden sm:flex items-center gap-6 text-xs text-neutral-400">
-                  <button onClick={() => setActiveTab("overview")} className="hover:text-white transition-colors cursor-pointer">Treatments</button>
-                  <button onClick={() => setActiveTab("overview")} className="hover:text-white transition-colors cursor-pointer">Specialists</button>
-                  <button onClick={() => setActiveTab("overview")} className="hover:text-white transition-colors cursor-pointer">Philosophy</button>
-                  <button onClick={() => setActiveTab("overview")} className="hover:text-white transition-colors cursor-pointer">Location</button>
-                </div>
-                <button
-                  onClick={() => setBookingOpen(true)}
-                  className="px-4 py-2 rounded-lg text-xs font-semibold text-slate-950 bg-sky-400 hover:bg-sky-300 transition-colors cursor-pointer"
-                >
-                  Book Appointment
-                </button>
-              </nav>
-
-              {/* Aura Hero */}
-              <div className="px-6 py-16 sm:py-24 max-w-4xl mx-auto text-center space-y-6">
-                <span className="text-xs uppercase tracking-widest text-sky-400 font-medium">Boutique Skin & Cellular Therapy</span>
-                <h1 className="text-3xl sm:text-5xl font-serif text-white font-normal tracking-tight leading-tight">
-                  Restorative aesthetics tailored to your cellular rhythm.
-                </h1>
-                <p className="text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed">
-                  Experience clinically formulated facials, holistic lymphatic drainage, and restorative skin rejuvenation in our serene downtown sanctuary.
-                </p>
-                <div className="flex items-center justify-center gap-4 pt-2">
-                  <button
-                    onClick={() => setBookingOpen(true)}
-                    className="px-6 py-3 rounded-xl text-xs font-semibold text-slate-950 bg-white hover:bg-neutral-100 transition-all cursor-pointer shadow-lg"
-                  >
-                    Reserve Consultation
-                  </button>
-                  <span className="text-xs text-neutral-400 flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-sky-400" /> Mon–Sat 9AM–8PM
+                  <span className="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-mono text-[10px] font-bold uppercase tracking-wider">
+                    Real Studio Project
+                  </span>
+                  <span className="font-semibold text-white">Salon Website & Booking Dashboard</span>
+                  <span className="text-neutral-500 hidden sm:inline">·</span>
+                  <span className="text-neutral-300 text-[11px] hidden sm:inline">
+                    Live Address: {SITE_CONFIG.salonProjectLiveUrl ? (
+                      <a href={SITE_CONFIG.salonProjectLiveUrl} target="_blank" rel="noopener noreferrer" className="text-sky-400 underline ml-1">
+                        {SITE_CONFIG.salonProjectLiveUrl}
+                      </a>
+                    ) : (
+                      <span className="text-amber-300/90 font-mono italic ml-1">[Address will be added here once provided by owner]</span>
+                    )}
                   </span>
                 </div>
+
+                {/* View Switcher: Client Storefront vs Salon Management Dashboard */}
+                <div className="flex items-center gap-1.5 p-1 bg-black/60 rounded-lg border border-neutral-800 text-xs">
+                  <button
+                    onClick={() => setSalonMode("storefront")}
+                    className={`px-3 py-1 rounded-md transition-all cursor-pointer font-medium ${
+                      salonMode === "storefront" ? "bg-sky-500 text-slate-950 font-semibold shadow" : "text-neutral-400 hover:text-white"
+                    }`}
+                  >
+                    Client Website
+                  </button>
+                  <button
+                    onClick={() => setSalonMode("dashboard")}
+                    className={`px-3 py-1 rounded-md transition-all cursor-pointer font-medium ${
+                      salonMode === "dashboard" ? "bg-sky-500 text-slate-950 font-semibold shadow" : "text-neutral-400 hover:text-white"
+                    }`}
+                  >
+                    Salon Admin Dashboard
+                  </button>
+                </div>
               </div>
 
-              {/* Aura Treatment Catalog */}
-              <div className="px-6 py-12 max-w-5xl mx-auto border-t border-white/[0.08]">
-                <h2 className="text-xs font-mono uppercase tracking-widest text-sky-400 mb-6 text-center">Curated Clinical Treatments</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="p-6 rounded-xl bg-neutral-900/40 border border-neutral-800 space-y-3">
-                    <div className="text-sm font-semibold text-white">Cellular Glow Facial</div>
-                    <p className="text-xs text-neutral-400 leading-relaxed">
-                      Custom enzymatic peel with micro-infusion hyaluronic acid and calming oxygen dome.
+              {salonMode === "storefront" ? (
+                /* Salon Client Storefront View */
+                <div>
+                  <nav className="border-b border-white/[0.08] px-6 py-4 flex items-center justify-between bg-[#0B0F19]/90 backdrop-blur sticky top-0 z-20">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-3.5 h-3.5 rounded bg-sky-400 flex items-center justify-center text-slate-950 font-black text-[10px]">
+                        S
+                      </div>
+                      <span className="font-bold text-base tracking-wider text-white font-['Syne']">ELITE SALON & GROOMING</span>
+                    </div>
+                    <div className="hidden sm:flex items-center gap-6 text-xs text-neutral-400 font-medium">
+                      <button onClick={() => setSalonMode("storefront")} className="text-white hover:text-sky-300 transition-colors cursor-pointer">Services & Rates</button>
+                      <button onClick={() => setSalonMode("storefront")} className="hover:text-white transition-colors cursor-pointer">Our Stylists</button>
+                      <button onClick={() => setSalonMode("dashboard")} className="text-sky-400 hover:underline cursor-pointer">Staff Dashboard ↗</button>
+                    </div>
+                    <button
+                      onClick={() => setBookingOpen(true)}
+                      className="px-4 py-2 rounded-lg text-xs font-semibold text-slate-950 bg-sky-400 hover:bg-sky-300 transition-colors cursor-pointer shadow-md"
+                    >
+                      Book Appointment
+                    </button>
+                  </nav>
+
+                  {/* Salon Hero */}
+                  <div className="px-6 py-14 sm:py-20 max-w-4xl mx-auto text-center space-y-5">
+                    <span className="text-xs uppercase tracking-widest text-sky-400 font-semibold font-mono">
+                      Premium Haircuts · Beard Grooming · Hair Spa
+                    </span>
+                    <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight font-['Syne']">
+                      Precision styling and grooming crafted for your signature look.
+                    </h1>
+                    <p className="text-sm text-neutral-300 max-w-xl mx-auto leading-relaxed">
+                      Book your master stylist and preferred slot in under a minute with real-time schedule availability and automated WhatsApp reminders.
                     </p>
-                    <div className="flex items-center justify-between text-xs pt-3 border-t border-neutral-800">
-                      <span className="text-sky-400 font-mono">60 Min · ₹2,400</span>
+                    <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
                       <button
-                        onClick={() => {
-                          setSelectedService("Cellular Glow Facial (60 min - ₹2,400)");
-                          setBookingOpen(true);
-                        }}
-                        className="text-xs text-white underline hover:text-sky-300 cursor-pointer"
+                        onClick={() => setBookingOpen(true)}
+                        className="px-6 py-3 rounded-xl text-xs font-bold text-slate-950 bg-white hover:bg-neutral-100 transition-all cursor-pointer shadow-lg"
                       >
-                        Book Now
+                        Book Appointment Now
+                      </button>
+                      <button
+                        onClick={() => setSalonMode("dashboard")}
+                        className="px-6 py-3 rounded-xl text-xs font-semibold text-sky-300 bg-sky-950/40 border border-sky-500/30 hover:bg-sky-900/40 transition-all cursor-pointer"
+                      >
+                        Inspect Staff Queue Dashboard ↗
                       </button>
                     </div>
                   </div>
 
-                  <div className="p-6 rounded-xl bg-neutral-900/40 border border-neutral-800 space-y-3">
-                    <div className="text-sm font-semibold text-white">Lymphatic Sculpting Ritual</div>
-                    <p className="text-xs text-neutral-400 leading-relaxed">
-                      Deep rhythmic contouring technique to release inflammation, improve circulation, and tone facial structure.
-                    </p>
-                    <div className="flex items-center justify-between text-xs pt-3 border-t border-neutral-800">
-                      <span className="text-sky-400 font-mono">75 Min · ₹3,200</span>
-                      <button
-                        onClick={() => {
-                          setSelectedService("Lymphatic Sculpting Ritual (75 min - ₹3,200)");
-                          setBookingOpen(true);
-                        }}
-                        className="text-xs text-white underline hover:text-sky-300 cursor-pointer"
-                      >
-                        Book Now
-                      </button>
+                  {/* Salon Service Menu & Rates */}
+                  <div className="px-6 py-12 max-w-5xl mx-auto border-t border-white/[0.08]">
+                    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+                      <div>
+                        <h2 className="text-xs font-mono uppercase tracking-widest text-sky-400 mb-1">Service Menu & Rates</h2>
+                        <h3 className="text-xl sm:text-2xl font-bold text-white font-['Syne']">Popular Grooming & Hair Services</h3>
+                      </div>
+                      <span className="text-xs text-neutral-400">Walk-ins welcome & online booking guaranteed</span>
                     </div>
-                  </div>
 
-                  <div className="p-6 rounded-xl bg-neutral-900/40 border border-neutral-800 space-y-3">
-                    <div className="text-sm font-semibold text-white">Radiance Skin Infusion</div>
-                    <p className="text-xs text-neutral-400 leading-relaxed">
-                      Collagen matrix therapy paired with soothing peptide mask and targeted LED light frequency.
-                    </p>
-                    <div className="flex items-center justify-between text-xs pt-3 border-t border-neutral-800">
-                      <span className="text-sky-400 font-mono">90 Min · ₹4,100</span>
-                      <button
-                        onClick={() => {
-                          setSelectedService("Radiance Skin Infusion (90 min - ₹4,100)");
-                          setBookingOpen(true);
-                        }}
-                        className="text-xs text-white underline hover:text-sky-300 cursor-pointer"
-                      >
-                        Book Now
-                      </button>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800 space-y-3 hover:border-neutral-700 transition-all">
+                        <div className="text-base font-bold text-white">Signature Executive Haircut</div>
+                        <p className="text-xs text-neutral-400 leading-relaxed">
+                          Includes consultation, clarifying hair wash, precision shear cut, neck taper, and matte styling clay finish.
+                        </p>
+                        <div className="flex items-center justify-between text-xs pt-3 border-t border-neutral-800">
+                          <span className="text-sky-400 font-mono font-bold">45 Min · ₹450</span>
+                          <button
+                            onClick={() => {
+                              setSelectedService("Signature Executive Haircut (₹450)");
+                              setBookingOpen(true);
+                            }}
+                            className="text-xs font-semibold text-white hover:text-sky-300 underline cursor-pointer"
+                          >
+                            Book Slot
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800 space-y-3 hover:border-neutral-700 transition-all">
+                        <div className="text-base font-bold text-white">Beard Sculpting & Hot Towel</div>
+                        <p className="text-xs text-neutral-400 leading-relaxed">
+                          Precision beard lineup, trimmer fade, hot towel steam prep, straight razor cheek contours, and organic beard oil treatment.
+                        </p>
+                        <div className="flex items-center justify-between text-xs pt-3 border-t border-neutral-800">
+                          <span className="text-sky-400 font-mono font-bold">30 Min · ₹300</span>
+                          <button
+                            onClick={() => {
+                              setSelectedService("Beard Sculpting & Hot Towel (₹300)");
+                              setBookingOpen(true);
+                            }}
+                            className="text-xs font-semibold text-white hover:text-sky-300 underline cursor-pointer"
+                          >
+                            Book Slot
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800 space-y-3 hover:border-neutral-700 transition-all">
+                        <div className="text-base font-bold text-white">Keratin Hair Spa & Scalp Detox</div>
+                        <p className="text-xs text-neutral-400 leading-relaxed">
+                          Intense deep conditioning keratin infusion, stimulating scalp massage, steam infusion, and frizz-free blow dry.
+                        </p>
+                        <div className="flex items-center justify-between text-xs pt-3 border-t border-neutral-800">
+                          <span className="text-sky-400 font-mono font-bold">60 Min · ₹1,200</span>
+                          <button
+                            onClick={() => {
+                              setSelectedService("Keratin Hair Spa & Scalp Detox (₹1,200)");
+                              setBookingOpen(true);
+                            }}
+                            className="text-xs font-semibold text-white hover:text-sky-300 underline cursor-pointer"
+                          >
+                            Book Slot
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800 space-y-3 hover:border-neutral-700 transition-all">
+                        <div className="text-base font-bold text-white">Total Grooming Combo</div>
+                        <p className="text-xs text-neutral-400 leading-relaxed">
+                          Complete package: Signature haircut, beard styling, exfoliating de-tan face scrub, and refreshing head massage.
+                        </p>
+                        <div className="flex items-center justify-between text-xs pt-3 border-t border-neutral-800">
+                          <span className="text-sky-400 font-mono font-bold">75 Min · ₹1,100</span>
+                          <button
+                            onClick={() => {
+                              setSelectedService("Total Grooming Combo (₹1,100)");
+                              setBookingOpen(true);
+                            }}
+                            className="text-xs font-semibold text-white hover:text-sky-300 underline cursor-pointer"
+                          >
+                            Book Slot
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800 space-y-3 hover:border-neutral-700 transition-all">
+                        <div className="text-base font-bold text-white">Ammonia-Free Hair Color</div>
+                        <p className="text-xs text-neutral-400 leading-relaxed">
+                          Full root touchup, balayage, or global shade transformation with protective botanical oil shield.
+                        </p>
+                        <div className="flex items-center justify-between text-xs pt-3 border-t border-neutral-800">
+                          <span className="text-sky-400 font-mono font-bold">90 Min · from ₹1,800</span>
+                          <button
+                            onClick={() => {
+                              setSelectedService("Ammonia-Free Hair Color (from ₹1,800)");
+                              setBookingOpen(true);
+                            }}
+                            className="text-xs font-semibold text-white hover:text-sky-300 underline cursor-pointer"
+                          >
+                            Book Slot
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800 space-y-3 hover:border-neutral-700 transition-all">
+                        <div className="text-base font-bold text-white">Keratin Smoothing Treatment</div>
+                        <p className="text-xs text-neutral-400 leading-relaxed">
+                          Professional long-lasting straightening and frizz elimination lasting up to 16 weeks with mirror shine.
+                        </p>
+                        <div className="flex items-center justify-between text-xs pt-3 border-t border-neutral-800">
+                          <span className="text-sky-400 font-mono font-bold">120 Min · ₹3,500</span>
+                          <button
+                            onClick={() => {
+                              setSelectedService("Keratin Smoothing Treatment (₹3,500)");
+                              setBookingOpen(true);
+                            }}
+                            className="text-xs font-semibold text-white hover:text-sky-300 underline cursor-pointer"
+                          >
+                            Book Slot
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                /* Salon Admin Management Dashboard View */
+                <div className="p-6 sm:p-8 space-y-8">
+                  {/* Dashboard Header Bar */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-neutral-800">
+                    <div>
+                      <div className="flex items-center gap-2 text-xs font-mono text-sky-400">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                        <span>LIVE SALON MANAGEMENT DASHBOARD</span>
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-bold text-white font-['Syne'] mt-1">
+                        Today's Client Queue & Stylist Schedule
+                      </h2>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => setBookingOpen(true)}
+                        className="px-3.5 py-2 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs transition-colors cursor-pointer flex items-center gap-1.5"
+                      >
+                        <span>+ New Appointment / Walk-in</span>
+                      </button>
+                      <button
+                        onClick={() => setSalonMode("storefront")}
+                        className="px-3 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-white font-medium text-xs transition-colors cursor-pointer"
+                      >
+                        View Client Storefront ↗
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Summary Metric Cards */}
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="p-4 rounded-xl bg-neutral-900/60 border border-neutral-800">
+                      <div className="text-xs text-neutral-400">Total Bookings Today</div>
+                      <div className="text-2xl font-bold text-white font-mono mt-1">{appointmentsQueue.length}</div>
+                      <div className="text-[11px] text-emerald-400 mt-1">● 9 online + {appointmentsQueue.length - 9} walk-ins</div>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-neutral-900/60 border border-neutral-800">
+                      <div className="text-xs text-neutral-400">In-Chair Now</div>
+                      <div className="text-2xl font-bold text-sky-400 font-mono mt-1">2 Clients</div>
+                      <div className="text-[11px] text-neutral-400 mt-1">Chairs 1 & 2 Active</div>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-neutral-900/60 border border-neutral-800">
+                      <div className="text-xs text-neutral-400">Est. Day Revenue</div>
+                      <div className="text-2xl font-bold text-emerald-400 font-mono mt-1">₹11,450</div>
+                      <div className="text-[11px] text-neutral-400 mt-1">Based on booked services</div>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-neutral-900/60 border border-neutral-800">
+                      <div className="text-xs text-neutral-400">WhatsApp Notification</div>
+                      <div className="text-2xl font-bold text-white font-mono mt-1">Active</div>
+                      <div className="text-[11px] text-sky-400 mt-1">Automated reminders enabled</div>
+                    </div>
+                  </div>
+
+                  {/* Appointments Live Queue Table */}
+                  <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 overflow-hidden">
+                    <div className="p-4 border-b border-neutral-800 flex items-center justify-between">
+                      <div className="text-sm font-bold text-white">Live Appointment Queue</div>
+                      <span className="text-xs text-neutral-400">Auto-refreshed in real time</span>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs text-neutral-300">
+                        <thead className="bg-neutral-950/60 text-neutral-400 text-[11px] uppercase font-mono border-b border-neutral-800">
+                          <tr>
+                            <th className="p-3">Time</th>
+                            <th className="p-3">Client</th>
+                            <th className="p-3">Service</th>
+                            <th className="p-3">Assigned Stylist</th>
+                            <th className="p-3">Amount</th>
+                            <th className="p-3">Status</th>
+                            <th className="p-3">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-neutral-800">
+                          {appointmentsQueue.map((apt) => (
+                            <tr key={apt.id} className="hover:bg-neutral-800/40 transition-colors">
+                              <td className="p-3 font-mono font-medium text-white">{apt.time}</td>
+                              <td className="p-3 font-semibold text-white">{apt.client}</td>
+                              <td className="p-3 text-neutral-300">{apt.service}</td>
+                              <td className="p-3 text-sky-400">{apt.stylist}</td>
+                              <td className="p-3 font-mono text-emerald-400">{apt.amount}</td>
+                              <td className="p-3">
+                                <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
+                                  apt.status === "In-Chair"
+                                    ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                                    : apt.status === "Completed"
+                                    ? "bg-neutral-800 text-neutral-400"
+                                    : "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                                }`}>
+                                  {apt.status}
+                                </span>
+                              </td>
+                              <td className="p-3">
+                                <button
+                                  onClick={() => alert(`WhatsApp reminder sent to ${apt.client} for their appointment at ${apt.time}`)}
+                                  className="px-2 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-[11px] font-medium transition-colors cursor-pointer"
+                                >
+                                  WhatsApp Alert
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Booking Modal */}
               {bookingOpen && (
                 <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-                  <div className="w-full max-w-md bg-[#0F1420] border border-neutral-800 rounded-2xl p-6 text-xs text-neutral-300 space-y-4">
+                  <div className="w-full max-w-md bg-[#0F1420] border border-neutral-800 rounded-2xl p-6 text-xs text-neutral-300 space-y-4 shadow-2xl">
                     <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
-                      <span className="text-sm font-semibold text-white">Reserve Appointment</span>
+                      <div>
+                        <span className="text-sm font-bold text-white">Book Salon Appointment</span>
+                        <p className="text-[11px] text-neutral-400">Instant confirmation & slot reservation</p>
+                      </div>
                       <button onClick={() => setBookingOpen(false)} className="text-neutral-400 hover:text-white cursor-pointer"><X className="w-4 h-4" /></button>
                     </div>
+
                     {bookingSuccess ? (
                       <div className="text-center py-6 space-y-3">
                         <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto"><Check className="w-5 h-5" /></div>
-                        <h4 className="text-sm font-bold text-white">Reservation Request Sent</h4>
-                        <p className="text-neutral-400 text-xs">Aura Wellness concierge will confirm your slot via WhatsApp / SMS within 15 minutes.</p>
-                        <button onClick={() => { setBookingSuccess(false); setBookingOpen(false); }} className="px-4 py-2 bg-neutral-800 text-white rounded-lg cursor-pointer">Done</button>
+                        <h4 className="text-sm font-bold text-white">Salon Appointment Confirmed!</h4>
+                        <p className="text-neutral-400 text-xs">
+                          Your slot for <span className="text-sky-300 font-semibold">{selectedService}</span> with <span className="text-sky-300 font-semibold">{selectedStylist}</span> at <span className="text-white font-mono">{selectedTimeSlot}</span> has been scheduled and added to the live salon dashboard.
+                        </p>
+                        <div className="pt-2 flex items-center justify-center gap-3">
+                          <button
+                            onClick={() => {
+                              setBookingSuccess(false);
+                              setBookingOpen(false);
+                              setSalonMode("dashboard");
+                            }}
+                            className="px-4 py-2 bg-sky-500 text-slate-950 font-bold rounded-lg cursor-pointer"
+                          >
+                            View in Salon Dashboard
+                          </button>
+                          <button
+                            onClick={() => {
+                              setBookingSuccess(false);
+                              setBookingOpen(false);
+                            }}
+                            className="px-4 py-2 bg-neutral-800 text-white rounded-lg cursor-pointer"
+                          >
+                            Done
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <form onSubmit={handleBookingSubmit} className="space-y-3">
                         <div>
-                          <label className="block text-neutral-400 mb-1">Selected Treatment</label>
-                          <input readOnly value={selectedService} className="w-full p-2.5 rounded bg-black/40 border border-neutral-800 text-white" />
+                          <label className="block text-neutral-400 mb-1">Select Service</label>
+                          <select
+                            value={selectedService}
+                            onChange={(e) => setSelectedService(e.target.value)}
+                            className="w-full p-2.5 rounded bg-black/60 border border-neutral-800 text-white"
+                          >
+                            <option>Signature Executive Haircut (₹450)</option>
+                            <option>Beard Sculpting & Hot Towel (₹300)</option>
+                            <option>Keratin Hair Spa & Scalp Detox (₹1,200)</option>
+                            <option>Total Grooming Combo (₹1,100)</option>
+                            <option>Ammonia-Free Hair Color (from ₹1,800)</option>
+                            <option>Keratin Smoothing Treatment (₹3,500)</option>
+                          </select>
                         </div>
+
                         <div>
-                          <label className="block text-neutral-400 mb-1">Your Full Name</label>
-                          <input required placeholder="Jane Doe" className="w-full p-2.5 rounded bg-black/40 border border-neutral-800 text-white" />
+                          <label className="block text-neutral-400 mb-1">Preferred Master Stylist</label>
+                          <select
+                            value={selectedStylist}
+                            onChange={(e) => setSelectedStylist(e.target.value)}
+                            className="w-full p-2.5 rounded bg-black/60 border border-neutral-800 text-white"
+                          >
+                            <option>Rahul (Senior Barber & Fades)</option>
+                            <option>Sneha (Creative Stylist & Colorist)</option>
+                            <option>Arjun (Senior Grooming Specialist)</option>
+                            <option>Any Available Master Stylist</option>
+                          </select>
                         </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-neutral-400 mb-1">Preferred Time Slot</label>
+                            <select
+                              value={selectedTimeSlot}
+                              onChange={(e) => setSelectedTimeSlot(e.target.value)}
+                              className="w-full p-2.5 rounded bg-black/60 border border-neutral-800 text-white font-mono"
+                            >
+                              <option>11:00 AM</option>
+                              <option>01:30 PM</option>
+                              <option>03:30 PM</option>
+                              <option>05:00 PM</option>
+                              <option>06:30 PM</option>
+                              <option>08:00 PM</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-neutral-400 mb-1">Date</label>
+                            <input
+                              type="date"
+                              required
+                              defaultValue="2026-10-02"
+                              className="w-full p-2.5 rounded bg-black/60 border border-neutral-800 text-white"
+                            />
+                          </div>
+                        </div>
+
                         <div>
-                          <label className="block text-neutral-400 mb-1">Phone / WhatsApp Number</label>
-                          <input required placeholder="+91 98765 43210" className="w-full p-2.5 rounded bg-black/40 border border-neutral-800 text-white" />
+                          <label className="block text-neutral-400 mb-1">Your Name</label>
+                          <input
+                            required
+                            placeholder="e.g. Vikram"
+                            value={clientName}
+                            onChange={(e) => setClientName(e.target.value)}
+                            className="w-full p-2.5 rounded bg-black/60 border border-neutral-800 text-white"
+                          />
                         </div>
+
                         <div>
-                          <label className="block text-neutral-400 mb-1">Preferred Date</label>
-                          <input type="date" required defaultValue="2026-10-02" className="w-full p-2.5 rounded bg-black/40 border border-neutral-800 text-white" />
+                          <label className="block text-neutral-400 mb-1">WhatsApp / Phone Number</label>
+                          <input
+                            required
+                            placeholder="+91 98765 43210"
+                            value={clientPhone}
+                            onChange={(e) => setClientPhone(e.target.value)}
+                            className="w-full p-2.5 rounded bg-black/60 border border-neutral-800 text-white"
+                          />
                         </div>
-                        <button type="submit" className="w-full py-2.5 bg-sky-400 hover:bg-sky-300 font-semibold text-slate-950 rounded-lg transition-colors cursor-pointer mt-2">
-                          Confirm Booking Request
+
+                        <button
+                          type="submit"
+                          className="w-full py-2.5 bg-sky-400 hover:bg-sky-300 font-bold text-slate-950 rounded-lg transition-colors cursor-pointer mt-2"
+                        >
+                          Confirm & Add to Live Schedule
                         </button>
                       </form>
                     )}
                   </div>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* Studio Portfolio Live Render */}
+          {project.id === "studio-portfolio" && (
+            <div className="bg-[#080B11] text-neutral-200 min-h-screen">
+              {/* Header Banner */}
+              <div className="bg-sky-950/50 border-b border-sky-500/20 px-6 py-3 text-xs flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-bold uppercase tracking-wider">
+                    Live Production Website
+                  </span>
+                  <span className="font-semibold text-white">NEXORA  Studios Portfolio</span>
+                  <span className="text-neutral-500 hidden sm:inline">·</span>
+                  <span className="text-neutral-300 text-[11px] hidden sm:inline font-mono">
+                    Live Address: <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-sky-400 underline">{project.liveUrl}</a>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] text-emerald-400 flex items-center gap-1 font-mono">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Active Online
+                  </span>
+                </div>
+              </div>
+
+              {/* Showcase Hero */}
+              <div className="p-6 sm:p-12 max-w-4xl mx-auto space-y-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-mono">
+                  <span>✦ Real Live Website Build</span>
+                </div>
+                <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-['Syne'] leading-tight">
+                  High-converting digital craftsmanship for modern brands.
+                </h1>
+                <p className="text-sm sm:text-base text-neutral-300 leading-relaxed max-w-2xl">
+                  You are actively navigating this live application. It features real-time light/dark theme shifting, interactive multi-scale staging viewports, transparent ₹1,200 setup + ₹300/mo maintenance pricing, and an appointment booking operational dashboard.
+                </p>
+
+                <div className="p-4 rounded-xl bg-neutral-900/70 border border-neutral-800 space-y-3 text-xs">
+                  <div className="font-mono text-sky-400 uppercase tracking-wider text-[11px] font-semibold">
+                    Live Production Web Address
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-black/60 rounded-lg border border-neutral-800">
+                    <code className="text-emerald-400 font-mono text-xs break-all">
+                      {project.liveUrl}
+                    </code>
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 shrink-0 transition-colors"
+                    >
+                      <span>Open in New Tab</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 text-xs">
+                  <div className="p-4 rounded-xl bg-neutral-900/40 border border-neutral-800 space-y-1">
+                    <div className="text-white font-bold">🌓 Dark & Light Mode Support</div>
+                    <div className="text-neutral-400">Integrated theme engine with crescent moon & sun toggling and local state persistence.</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-neutral-900/40 border border-neutral-800 space-y-1">
+                    <div className="text-white font-bold">📱 Interactive Viewport Simulator</div>
+                    <div className="text-neutral-400">Desktop, tablet, and mobile device staging to test responsive fluid grids.</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-neutral-900/40 border border-neutral-800 space-y-1">
+                    <div className="text-white font-bold">💳 Transparent Indian Pricing</div>
+                    <div className="text-neutral-400">Minimum ₹1,200 website development charge + ₹300/month ongoing maintenance.</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-neutral-900/40 border border-neutral-800 space-y-1">
+                    <div className="text-white font-bold">💬 WhatsApp Concierge & Inquiry</div>
+                    <div className="text-neutral-400">Direct lead capture with formatted WhatsApp inquiry generation.</div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
@@ -487,7 +895,7 @@ export function LiveProjectView({ project, onClose }: LiveProjectViewProps) {
           )}
 
           {/* Vanguard Advisory / Generic Live Render */}
-          {project.id !== "aura-wellness" && project.id !== "kaviar-bistro" && project.id !== "solstice-travel" && (
+          {project.id !== "salon-dashboard" && project.id !== "kaviar-bistro" && project.id !== "solstice-travel" && (
             <div className="bg-[#0B0E17] text-neutral-200 min-h-screen p-6 sm:p-12 space-y-8">
               <nav className="border-b border-neutral-800 pb-4 flex items-center justify-between">
                 <span className="text-lg font-bold text-white tracking-tight font-['Syne']">{project.name}</span>

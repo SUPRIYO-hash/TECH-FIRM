@@ -14,6 +14,7 @@ export interface SiteConfig {
   contactEmail: string;
   supportEmail: string;
   standardStartingPrice: number; // In INR (₹)
+  standardMonthlyMaintenance: number; // In INR (₹/month)
   promotionalOffer: {
     enabled: boolean;
     title: string;
@@ -30,6 +31,10 @@ export interface SiteConfig {
     label: string;
   }[];
   legalLastUpdated: string;
+  // Live address for the real Salon Website & Dashboard project (user will provide address later)
+  salonProjectLiveUrl: string;
+  // Live address for this studio portfolio website itself
+  portfolioProjectLiveUrl: string;
 }
 
 export const SITE_CONFIG: SiteConfig = {
@@ -38,13 +43,18 @@ export const SITE_CONFIG: SiteConfig = {
   brandDescription: "We design and develop fast, responsive, and tailored websites for ambitious businesses, salons, restaurants, travel agencies, and personal brands.",
   contactEmail: "productionsupriyo@gmail.com",
   supportEmail: "productionsupriyo@gmail.com",
-  standardStartingPrice: 2000,
+  standardStartingPrice: 1200,
+  standardMonthlyMaintenance: 300,
+  // Slot for the real Salon Website & Dashboard live URL. Leave empty or update when address is provided:
+  salonProjectLiveUrl: "",
+  // Live address of this portfolio website:
+  portfolioProjectLiveUrl: typeof window !== "undefined" ? window.location.origin : "https://nexorastudios.com",
   promotionalOffer: {
     enabled: true,
     title: "Durga Puja Special",
-    subtitle: "Basic website starting from ₹1,500 with a free domain eligible on qualifying annual hosting packages.",
+    subtitle: "Basic website setup at ₹1,200 with ongoing ₹300/month maintenance & domain setup.",
     badgeText: "Festive Offer",
-    discountedPrice: 1500,
+    discountedPrice: 1200,
     endDate: "2026-10-31", // Until Durga Puja Dashami / Festive season
     termsNotice: "Domain extension and availability subject to qualifying terms and third-party registrar eligibility.",
   },

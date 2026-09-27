@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ThemeProvider } from "./context/ThemeContext";
 import { ScrollProgress } from "./components/ScrollProgress";
 import { PromotionalBanner } from "./components/PromotionalBanner";
 import { Navbar } from "./components/Navbar";
@@ -91,8 +92,9 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#080B11] text-[#E2E8F0] selection:bg-sky-500 selection:text-white">
-      {/* Scroll Progress Bar */}
+    <ThemeProvider>
+      <div className="relative min-h-screen bg-[#080B11] text-[#E2E8F0] selection:bg-sky-500 selection:text-white transition-colors duration-200">
+        {/* Scroll Progress Bar */}
       <ScrollProgress />
 
       {/* Dismissible Festive Banner */}
@@ -117,6 +119,7 @@ export default function App() {
           <Portfolio
             onSelectProject={(project) => setSelectedProject(project)}
             onOpenLiveWebsite={handleOpenLiveWebsite}
+            onRequestBuild={(projectName) => handlePricingQuote(projectName)}
           />
 
           {/* What We Build (Industry Categories) */}
@@ -181,8 +184,9 @@ export default function App() {
       {/* Studio Concierge Chatbot */}
       <Chatbot
         onNavigateSection={scrollToSection}
-        onOpenPricingQuote={() => handlePricingQuote("Starter Business Site (₹2,000)")}
+        onOpenPricingQuote={() => handlePricingQuote("Starter Business Site (₹1,200 + ₹300/mo)")}
       />
     </div>
+    </ThemeProvider>
   );
 }

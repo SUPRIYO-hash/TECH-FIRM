@@ -305,13 +305,13 @@ export function ContactForm({
                       >
                         <option value="Business Website">Business Website</option>
                         <option value="Restaurant & Café Website">Restaurant & Café Website</option>
-                        <option value="Salon & Beauty Website">Salon & Beauty Website</option>
+                        <option value="Salon & Grooming Website with Dashboard">Salon Website & Booking Dashboard</option>
                         <option value="Travel & Tourism Website">Travel & Tourism Website</option>
                         <option value="Personal Brand & Portfolio">Personal Brand & Portfolio</option>
                         <option value="Service Business Website">Service Business Website</option>
                         <option value="Landing Page">Campaign Landing Page</option>
                         <option value="Website Redesign">Website Redesign</option>
-                        <option value="Starter Business Site (₹2,000)">Starter Business Site (from ₹2,000)</option>
+                        <option value="Starter Business Site (₹1,200 + ₹300/mo)">Starter Business Site (₹1,200 + ₹300/mo)</option>
                         <option value="Durga Puja Festive Offer">Durga Puja Festive Offer</option>
                         <option value="Other Custom Inquiry">Other Custom Inquiry</option>
                       </select>
@@ -329,7 +329,7 @@ export function ContactForm({
                         className="w-full px-3.5 py-2.5 rounded-lg bg-[#0E1320] border border-neutral-800 text-xs text-white focus:outline-none focus:border-sky-500 transition-colors cursor-pointer"
                       >
                         <option value="">Select an approximate range</option>
-                        <option value="₹2,000 – ₹5,000">₹2,000 – ₹5,000 (Starter / Single-page)</option>
+                        <option value="₹1,200 – ₹5,000">₹1,200 – ₹5,000 (Starter / Single-page)</option>
                         <option value="₹5,000 – ₹15,000">₹5,000 – ₹15,000 (Multi-page / Booking)</option>
                         <option value="₹15,000 – ₹35,000">₹15,000 – ₹35,000 (Commercial Platform)</option>
                         <option value="₹35,000+">₹35,000+ (Bespoke Application)</option>

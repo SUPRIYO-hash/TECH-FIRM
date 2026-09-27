@@ -16,7 +16,7 @@ export const FAQS_DATA: FaqItem[] = [
     id: "faq-cost",
     question: "How much does a website cost?",
     category: "Pricing & Scope",
-    answer: "Our standard basic websites start from ₹2,000. Because every business has unique requirements, the final investment depends on factors such as total page count, specific interactive features (e.g. online booking, custom calculators), asset preparation, integrations, and hosting requirements. We provide transparent, itemized quotes before any work begins."
+    answer: "Our minimum website making charge starts from ₹1,200, accompanied by a ₹300/month ongoing maintenance plan that covers technical updates, security patches, uptime monitoring, and routine content modifications. For multi-page commercial platforms or specialized dashboards, quotes are tailored based on factors such as total page volume, interactive booking features, asset preparation, and custom integrations. We provide transparent, itemized quotes before any work begins."
   },
   {
     id: "faq-time",

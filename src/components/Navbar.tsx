@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Moon, Sun } from "lucide-react";
 import { SITE_CONFIG } from "../config/siteConfig";
+import { useTheme } from "../context/ThemeContext";
 
 interface NavbarProps {
   onOpenContact?: () => void;
@@ -10,6 +11,7 @@ export function Navbar({ onOpenContact }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,7 +40,7 @@ export function Navbar({ onOpenContact }: NavbarProps) {
 
   const navLinks = [
     { label: "Home", href: "#home", id: "home" },
-    { label: "Work", href: "#work", id: "work" },
+    { label: "Selected Work", href: "#work", id: "work" },
     { label: "Services", href: "#services", id: "services" },
     { label: "Process", href: "#process", id: "process" },
     { label: "Pricing", href: "#pricing", id: "pricing" },
@@ -72,98 +74,117 @@ export function Navbar({ onOpenContact }: NavbarProps) {
       className={`sticky top-0 z-40 w-full transition-all duration-300 ${
         isScrolled
           ? "bg-[#080B11]/90 backdrop-blur-md border-b border-white/[0.08] shadow-lg shadow-black/20 py-3.5"
-          : "bg-transparent border-b border-white/[0.04] py-5"
+          : "bg-transparent border-b border-white/[0.04] py-4 sm:py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Zone 1: Single text element wordmark */}
-          <a
-            href="#home"
-            className="text-lg sm:text-xl font-bold tracking-tight text-white font-['Syne'] hover:text-sky-400 transition-colors whitespace-nowrap"
-            aria-label={`${SITE_CONFIG.brandName} Home`}
-          >
-            {SITE_CONFIG.brandName}
-          </a>
-
-          {/* Zone 2: 4-6 clean text navigation links */}
-          <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-neutral-300">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick(link.href);
-                }}
-                className={`relative py-1 transition-colors hover:text-white whitespace-nowrap ${
-                  activeSection === link.id ? "text-sky-400 font-semibold" : "text-neutral-400"
-                }`}
-              >
-                {link.label}
-                {activeSection === link.id && (
-                  <span
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-sky-400 rounded-full"
-                    aria-hidden="true"
-                  />
-                )}
-              </a>
-            ))}
-          </nav>
-
-          {/* Zone 3: 1-2 primary actions */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleCtaClick}
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-slate-900 bg-white rounded-lg hover:bg-neutral-100 active:scale-[0.98] transition-all whitespace-nowrap shadow-sm cursor-pointer group"
-            >
-              <span>Start a Project</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-slate-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </button>
-
-            {/* Mobile menu trigger */}
+          {/* LEFT HEADER: 3 lines menu icon button */}
+          <div className="flex-1 flex items-center justify-start">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-neutral-300 hover:text-white rounded-lg hover:bg-white/[0.05] transition-colors cursor-pointer"
+              className="p-2 -ml-2 rounded-xl text-neutral-300 hover:text-white hover:bg-white/[0.08] transition-colors cursor-pointer flex items-center gap-2 group"
               aria-expanded={mobileMenuOpen}
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? (
+                <X className="w-5 h-5 text-sky-400" />
+              ) : (
+                <Menu className="w-5 h-5 group-hover:text-sky-400 transition-colors" />
+              )}
+              <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider text-neutral-400 group-hover:text-white transition-colors">
+                {mobileMenuOpen ? "Close" : "Menu"}
+              </span>
+            </button>
+          </div>
+
+          {/* CENTER HEADER: NEXORA Studios title */}
+          <div className="flex-shrink-0 flex items-center justify-center text-center px-2">
+            <a
+              href="#home"
+              className="text-base sm:text-xl font-extrabold tracking-tight text-white font-['Syne'] hover:text-sky-400 transition-colors whitespace-nowrap"
+              aria-label={`${SITE_CONFIG.brandName} Home`}
+            >
+              {SITE_CONFIG.brandName}
+            </a>
+          </div>
+
+          {/* RIGHT HEADER: Dark mode & light mode toggle with Crescent moon & Sun */}
+          <div className="flex-1 flex items-center justify-end gap-2.5">
+            {/* Theme toggle button */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 sm:px-2.5 sm:py-1.5 rounded-xl border border-white/[0.1] bg-white/[0.05] hover:bg-white/[0.12] text-neutral-200 hover:text-white active:scale-95 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              title={theme === "dark" ? "Dark mode active (Crescent Moon). Click for Light mode" : "Light mode active (Sun). Click for Dark mode"}
+            >
+              {theme === "dark" ? (
+                <Moon className="w-4 h-4 sm:w-4 sm:h-4 text-sky-400 fill-sky-400/20" />
+              ) : (
+                <Sun className="w-4 h-4 sm:w-4 sm:h-4 text-amber-500 fill-amber-500/20" />
+              )}
+              <span className="text-[11px] font-medium text-neutral-300 hidden md:inline">
+                {theme === "dark" ? "Dark" : "Light"}
+              </span>
+            </button>
+
+            {/* Start a Project Action */}
+            <button
+              onClick={handleCtaClick}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-slate-900 bg-white rounded-lg hover:bg-neutral-100 active:scale-[0.98] transition-all whitespace-nowrap shadow-sm cursor-pointer group"
+            >
+              <span>Start Project</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-slate-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile drawer navigation */}
+      {/* Navigation Drawer (Opens when 3-lines menu on left is clicked) */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-white/[0.08] bg-[#080B11]/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-3">
-          <nav className="flex flex-col space-y-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick(link.href);
-                }}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeSection === link.id
-                    ? "bg-sky-500/10 text-sky-400 font-semibold"
-                    : "text-neutral-300 hover:bg-white/[0.04] hover:text-white"
-                }`}
+        <div className="border-b border-white/[0.08] bg-[#080B11]/98 backdrop-blur-xl px-4 sm:px-6 pt-4 pb-6 space-y-4 animate-in fade-in slide-in-from-top-2 duration-200 shadow-2xl">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] mb-3">
+              <span className="text-xs font-mono uppercase tracking-wider text-neutral-400">Navigation Menu</span>
+              <span className="text-[11px] text-neutral-500">NEXORA Studios Direct Directory</span>
+            </div>
+
+            <nav className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {navLinks.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLinkClick(link.href);
+                  }}
+                  className={`px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all ${
+                    activeSection === link.id
+                      ? "bg-sky-500/15 text-sky-400 font-semibold border border-sky-500/30"
+                      : "text-neutral-300 hover:bg-white/[0.06] hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="pt-4 mt-2 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="text-xs text-neutral-400 flex items-center gap-2">
+                <span>Inquiries:</span>
+                <a href={`mailto:${SITE_CONFIG.contactEmail}`} className="text-sky-400 hover:underline">
+                  {SITE_CONFIG.contactEmail}
+                </a>
+              </div>
+
+              <button
+                onClick={handleCtaClick}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 text-xs font-semibold text-slate-900 bg-white rounded-lg hover:bg-neutral-100 transition-all cursor-pointer shadow-sm"
               >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-          <div className="pt-2">
-            <button
-              onClick={handleCtaClick}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-slate-900 bg-white rounded-lg hover:bg-neutral-100 transition-all cursor-pointer"
-            >
-              <span>Start a Project</span>
-              <ArrowUpRight className="w-4 h-4 text-slate-900" />
-            </button>
+                <span>Start a Project</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-slate-900" />
+              </button>
+            </div>
           </div>
         </div>
       )}

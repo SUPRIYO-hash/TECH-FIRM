@@ -68,3 +68,98 @@
   background-size: 24px 24px;
   background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
 }
+
+/* Light Mode Overrides */
+html.light body {
+  background-color: #F8FAFC;
+  color: #0F172A;
+}
+
+html.light .bg-\[\#080B11\] {
+  background-color: #F8FAFC !important;
+}
+
+html.light .bg-\[\#0B0F19\],
+html.light .bg-\[\#0A0D15\],
+html.light .bg-\[\#0E1320\],
+html.light .bg-\[\#0F1420\],
+html.light .bg-\[\#0B0E17\] {
+  background-color: #FFFFFF !important;
+}
+
+html.light .bg-neutral-900,
+html.light .bg-neutral-950,
+html.light .bg-\[\#090D16\] {
+  background-color: #F1F5F9 !important;
+}
+
+html.light .bg-neutral-900\/40,
+html.light .bg-neutral-900\/50,
+html.light .bg-neutral-900\/60,
+html.light .bg-neutral-900\/80,
+html.light .bg-neutral-900\/90 {
+  background-color: rgba(241, 245, 249, 0.9) !important;
+}
+
+html.light .bg-black\/40,
+html.light .bg-black\/60,
+html.light .bg-black\/80 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+html.light .border-neutral-800,
+html.light .border-neutral-700,
+html.light .border-white\/\[0\.08\],
+html.light .border-white\/\[0\.04\],
+html.light .border-white\/\[0\.1\] {
+  border-color: #E2E8F0 !important;
+}
+
+html.light .text-white {
+  color: #0F172A !important;
+}
+
+html.light .text-neutral-200 {
+  color: #1E293B !important;
+}
+
+html.light .text-neutral-300 {
+  color: #334155 !important;
+}
+
+html.light .text-neutral-400 {
+  color: #64748B !important;
+}
+
+html.light .text-neutral-500 {
+  color: #94A3B8 !important;
+}
+
+html.light .divide-neutral-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #E2E8F0 !important;
+}
+
+html.light select option {
+  background-color: #FFFFFF;
+  color: #0F172A;
+}
+
+html.light .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px) !important;
+}
+
+html.light .bg-dot-pattern {
+  background-image: radial-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px) !important;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}

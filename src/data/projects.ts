@@ -1,3 +1,5 @@
+import { SITE_CONFIG } from "../config/siteConfig";
+
 export interface ProjectItem {
   id: string;
   name: string;
@@ -11,6 +13,9 @@ export interface ProjectItem {
   liveUrl: string;
   featured: boolean;
   themeColor: string;
+  isRealClientProject?: boolean;
+  projectStatus: "completed" | "on_demand_potential";
+  statusLabel: string;
   heroMockup: {
     tagline: string;
     subtext: string;
@@ -23,34 +28,86 @@ export interface ProjectItem {
 
 export const PROJECTS_DATA: ProjectItem[] = [
   {
-    id: "aura-wellness",
-    name: "Aura Wellness & Aesthetic Studio",
-    category: "Salons & Beauty",
-    industry: "Luxury Aesthetics & Skin Clinic",
-    shortDescription: "A serene, mobile-first appointment booking experience and treatment catalog for a boutique wellness studio.",
-    fullDescription: "Designed and engineered an ethereal, calming digital storefront for Aura Wellness. The platform integrates a real-time service reservation flow, specialist bios, interactive service menus, and frictionless WhatsApp and calendar confirmations.",
-    deliverables: ["Custom Web Design", "Responsive Web Development", "Service Booking Flow", "Performance Optimization"],
-    keyFeatures: [
-      "Treatment catalog with categorized pricing",
-      "Interactive appointment booking request flow",
-      "Mobile-optimized treatment gallery",
-      "One-click WhatsApp direct consultation",
-      "Fast load times under 0.8s on 4G"
+    id: "studio-portfolio",
+    name: "NEXORA  Studios – Agency & Portfolio Website",
+    category: "Portfolio Websites",
+    industry: "Web Design & Digital Agency",
+    shortDescription: "A high-performance modern agency portfolio website featuring dark/light mode, real project showcases, interactive staging previews, and custom quotation flows.",
+    fullDescription: "Designed and engineered as a comprehensive digital showroom for NEXORA Studios. Features a left-hand navigation drawer, centered branding, dual dark/light mode toggle with theme persistence, dedicated allocations for completed client work vs on-demand builds, interactive multi-device staging demos, and WhatsApp lead capture.",
+    deliverables: [
+      "Custom Responsive Portfolio Architecture",
+      "Dynamic Light & Dark Mode Engine",
+      "Interactive Multi-Device Staging Viewer",
+      "Transparent Pricing & Add-on Calculator",
+      "Direct WhatsApp & Contact Inquiries"
     ],
-    metricsOrHighlight: "Optimized for high mobile conversion",
-    liveUrl: "https://demo.nexorastudios.com/aura-wellness",
+    keyFeatures: [
+      "Live production website available directly at this web address",
+      "Dark mode (crescent moon) and light mode (sun) toggle",
+      "Interactive client project modal & viewport staging preview",
+      "Project allocation separating delivered builds from on-demand prototypes",
+      "Transparent minimum pricing structure (₹1,200 + ₹300/mo maintenance)",
+      "Zero-bloat, responsive, mobile-first design with Tailwind CSS"
+    ],
+    metricsOrHighlight: "Live Production Website (You Are Here)",
+    liveUrl: typeof window !== "undefined" ? window.location.href : "https://nexorastudios.com",
     featured: true,
+    isRealClientProject: true,
+    projectStatus: "completed",
+    statusLabel: "Completed & Live Project",
+    themeColor: "#38BDF8",
+    heroMockup: {
+      tagline: "Modern websites that make businesses look professional online",
+      subtext: "Live digital studio portfolio with dual light/dark mode and transparent pricing.",
+      ctaLabel: "Explore Live Site",
+      accentColor: "#0EA5E9",
+      navItems: ["Home", "Selected Work", "Services", "Pricing", "Contact"],
+      bannerHighlights: [
+        { label: "Live Address", value: "This Website" },
+        { label: "Theme", value: "Dark / Light Mode" },
+        { label: "Status", value: "Active Production" }
+      ]
+    }
+  },
+  {
+    id: "salon-dashboard",
+    name: "Salon Website & Booking Dashboard",
+    category: "Salons & Grooming",
+    industry: "Hair Salon & Grooming Studio",
+    shortDescription: "A custom responsive salon website and operational client appointment management dashboard.",
+    fullDescription: "A real production website and operational management dashboard engineered for a hair salon and grooming studio. Features customer self-booking with stylist selection, service rate catalog (haircuts, styling, beard grooming, hair spa), and a real-time staff scheduling & walk-in queue dashboard. Built with mobile-first performance and direct WhatsApp booking confirmation.",
+    deliverables: [
+      "Custom Salon Website Design",
+      "Client Appointment Self-Booking",
+      "Real-Time Staff & Queue Dashboard",
+      "Service Rate Catalog",
+      "WhatsApp Booking Confirmation"
+    ],
+    keyFeatures: [
+      "Real salon operational dashboard with active queue tracking",
+      "Client appointment reservation with time-slot selection",
+      "Service menu covering haircuts, styling, beard work, and treatments",
+      "Staff allocation and chair availability scheduling",
+      "Instant WhatsApp confirmation and direct inquiry link",
+      "Live address slot reserved (ready for domain reference)"
+    ],
+    metricsOrHighlight: "Real Client Booking & Management System",
+    liveUrl: SITE_CONFIG.salonProjectLiveUrl || "",
+    featured: true,
+    isRealClientProject: true,
+    projectStatus: "completed",
+    statusLabel: "Completed Client Project",
     themeColor: "#0EA5E9",
     heroMockup: {
-      tagline: "Holistic Aesthetics & Skin Therapy",
-      subtext: "Bespoke clinical treatments curated for restorative cellular radiance and inner balance.",
-      ctaLabel: "Reserve Consultation",
+      tagline: "Modern Haircuts, Styling & Client Management",
+      subtext: "Custom salon website with real-time appointment booking, staff schedules, and WhatsApp alerts.",
+      ctaLabel: "Book Appointment / Open Dashboard",
       accentColor: "#38BDF8",
-      navItems: ["Treatments", "Therapists", "Pricing", "Location"],
+      navItems: ["Services & Rates", "Stylists", "Book Appointment", "Staff Dashboard"],
       bannerHighlights: [
-        { label: "Client Rating", value: "4.9 / 5" },
-        { label: "Response Time", value: "< 15 min" },
-        { label: "Bookings", value: "Real-time" }
+        { label: "Salon Appointments", value: "Online & Walk-ins" },
+        { label: "Notification", value: "Instant WhatsApp" },
+        { label: "Live Reference", value: "Address to be added" }
       ]
     }
   },
@@ -69,9 +126,11 @@ export const PROJECTS_DATA: ProjectItem[] = [
       "Dietary filters (Vegan, Gluten-Free, Organic)",
       "Accessible high-contrast typography"
     ],
-    metricsOrHighlight: "Zero-friction digital dining menu",
+    metricsOrHighlight: "Ready to Build on Request",
     liveUrl: "https://demo.nexorastudios.com/kaviar-bistro",
     featured: true,
+    projectStatus: "on_demand_potential",
+    statusLabel: "Available on Demand (Ready to Build)",
     themeColor: "#F59E0B",
     heroMockup: {
       tagline: "Artisan Slow Food & Micro-Roastery",
@@ -101,9 +160,11 @@ export const PROJECTS_DATA: ProjectItem[] = [
       "Offline-first route maps and gear checklists",
       "Sub-second image loading and WebP compression"
     ],
-    metricsOrHighlight: "Curated expedition discovery",
+    metricsOrHighlight: "Ready to Build on Request",
     liveUrl: "https://demo.nexorastudios.com/solstice-travel",
     featured: true,
+    projectStatus: "on_demand_potential",
+    statusLabel: "Available on Demand (Ready to Build)",
     themeColor: "#10B981",
     heroMockup: {
       tagline: "Untamed Horizons & Curated Expeditions",
@@ -133,9 +194,11 @@ export const PROJECTS_DATA: ProjectItem[] = [
       "Rigorous contrast ratios and keyboard navigation",
       "Clean semantic structure tailored for search engines"
     ],
-    metricsOrHighlight: "Authoritative corporate architecture",
+    metricsOrHighlight: "Ready to Build on Request",
     liveUrl: "https://demo.nexorastudios.com/vanguard-advisory",
     featured: true,
+    projectStatus: "on_demand_potential",
+    statusLabel: "Available on Demand (Ready to Build)",
     themeColor: "#6366F1",
     heroMockup: {
       tagline: "Precision Counsel for Complex Enterprise",
@@ -165,9 +228,11 @@ export const PROJECTS_DATA: ProjectItem[] = [
       "Private commission inquiry flow with budget tiers",
       "Zero clutter, typography-first minimalism"
     ],
-    metricsOrHighlight: "Editorial minimalism & typography",
+    metricsOrHighlight: "Ready to Build on Request",
     liveUrl: "https://demo.nexorastudios.com/elena-rostova",
     featured: false,
+    projectStatus: "on_demand_potential",
+    statusLabel: "Available on Demand (Ready to Build)",
     themeColor: "#EC4899",
     heroMockup: {
       tagline: "Spatial Form & Material Experiments",
@@ -197,9 +262,11 @@ export const PROJECTS_DATA: ProjectItem[] = [
       "Emergency cargo dispatch hotline integration",
       "Ultra-fast loading on mobile handheld devices"
     ],
-    metricsOrHighlight: "Streamlined B2B freight intake",
+    metricsOrHighlight: "Ready to Build on Request",
     liveUrl: "https://demo.nexorastudios.com/apex-logistics",
     featured: false,
+    projectStatus: "on_demand_potential",
+    statusLabel: "Available on Demand (Ready to Build)",
     themeColor: "#14B8A6",
     heroMockup: {
       tagline: "Reliable Cold Chain & Regional Freight",
@@ -218,9 +285,9 @@ export const PROJECTS_DATA: ProjectItem[] = [
 
 export const PROJECT_CATEGORIES = [
   "All",
+  "Salons & Grooming",
   "Business Websites",
   "Restaurants & Cafés",
-  "Salons & Beauty",
   "Travel & Tourism",
   "Personal Brands",
   "Service Businesses"

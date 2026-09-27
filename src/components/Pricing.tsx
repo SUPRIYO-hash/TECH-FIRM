@@ -12,21 +12,23 @@ export function Pricing({ onRequestQuote }: PricingProps) {
     {
       id: "starter",
       name: "Starter Business Site",
-      priceLabel: `Starting from ₹${SITE_CONFIG.standardStartingPrice.toLocaleString()}`,
+      priceLabel: `₹${SITE_CONFIG.standardStartingPrice.toLocaleString()} + ₹${SITE_CONFIG.standardMonthlyMaintenance}/mo`,
+      subPriceHint: "Minimum website making charge: ₹1,200 setup with ongoing ₹300/month maintenance & support",
       promoNote: isPromoActive
-        ? `Festive promotional offer: from ₹${SITE_CONFIG.promotionalOffer.discountedPrice.toLocaleString()} with qualifying domain`
+        ? `Festive promotional offer: ₹${SITE_CONFIG.promotionalOffer.discountedPrice.toLocaleString()} setup + ₹${SITE_CONFIG.standardMonthlyMaintenance}/mo with domain assistance`
         : null,
-      description: "Ideal for local shops, salons, cafés, and professionals needing a clean, authoritative single-page digital home.",
+      description: "Ideal for salons, local businesses, cafés, and professionals needing a high-speed, professional website with hands-free monthly maintenance.",
       deliverables: [
-        "Single-page responsive layout",
+        "Full responsive website design & build",
+        "₹300/month maintenance (content updates, security & hosting support)",
         "Mobile-first responsive architecture",
         "Business hours, address, and Google Maps",
-        "Click-to-call & WhatsApp integration",
+        "Click-to-call & WhatsApp direct chat",
         "Contact & lead inquiry form",
         "Basic SEO setup & meta tags",
-        "Domain & hosting configuration guidance"
+        "SSL certificate & domain connection"
       ],
-      idealFor: "Salons, neighbourhood restaurants, local trades, personal brands"
+      idealFor: "Salons & barbers, local shops, restaurants, personal portfolios"
     },
     {
       id: "commercial",
@@ -76,7 +78,7 @@ export function Pricing({ onRequestQuote }: PricingProps) {
             Clear, honest pricing with zero hidden surprises.
           </h2>
           <p className="text-sm text-neutral-300 leading-relaxed">
-            Every project is tailored to its requirements. Contact us for the current offer and final quote.
+            Minimum website making charge starts from <span className="text-white font-semibold">₹1,200</span> plus <span className="text-sky-400 font-semibold">₹300/month</span> for ongoing maintenance, hosting management, and security updates. Custom commercial platforms are quoted based on specific scope.
           </p>
         </div>
 

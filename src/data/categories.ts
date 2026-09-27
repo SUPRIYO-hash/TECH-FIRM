@@ -33,12 +33,12 @@ export const WHAT_WE_BUILD_CATEGORIES: CategoryItem[] = [
     sampleTypes: "Artisan bistros, specialty coffee roasters, fine dining, pizzerias, bakeries"
   },
   {
-    id: "salons-beauty",
-    title: "Salons & Beauty",
-    subtitle: "Aesthetic Appeal & Direct Booking",
-    description: "Serene, elegant websites for beauty lounges and skin clinics featuring detailed service menus, stylist bios, and friction-free appointments.",
-    commonFeatures: ["Treatment Price Catalog", "Stylist & Specialist Bios", "Mobile Appointment Intake", "Client Before/After Space"],
-    sampleTypes: "Hair studios, aesthetic skin clinics, day spas, nail lounges, wellness centers"
+    id: "salons-grooming",
+    title: "Salons & Grooming",
+    subtitle: "Online Booking & Queue Management",
+    description: "Dedicated websites and client appointment dashboards built for hair studios and grooming salons. Features service menus, stylist schedules, and instant WhatsApp booking.",
+    commonFeatures: ["Client Self-Booking & Time Slots", "Stylist & Staff Schedules", "Service Rate Catalog", "Live Client Queue Dashboard"],
+    sampleTypes: "Hair salons, barber studios, grooming parlours, styling lounges"
   },
   {
     id: "personal-brands",

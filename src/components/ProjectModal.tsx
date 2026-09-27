@@ -47,13 +47,26 @@ export function ProjectModal({ project, onClose, onRequestSimilarProject, onOpen
               style={{ backgroundColor: project.themeColor }}
             />
             <div>
-              <h2 id="modal-project-title" className="text-base sm:text-lg font-bold text-white tracking-tight">
-                {project.name}
+              <h2 id="modal-project-title" className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
+                <span>{project.name}</span>
+                {project.projectStatus === "completed" ? (
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold">
+                    ★ Delivered Work
+                  </span>
+                ) : (
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30 font-semibold">
+                    ⚡ Available on Demand
+                  </span>
+                )}
               </h2>
               <div className="flex items-center gap-2 text-xs text-neutral-400">
                 <span>{project.category}</span>
                 <span aria-hidden="true">·</span>
                 <span>{project.industry}</span>
+                <span aria-hidden="true">·</span>
+                <span className={project.projectStatus === "completed" ? "text-emerald-400 font-medium" : "text-sky-400 font-medium"}>
+                  {project.statusLabel}
+                </span>
               </div>
             </div>
           </div>
@@ -98,7 +111,7 @@ export function ProjectModal({ project, onClose, onRequestSimilarProject, onOpen
               }}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-500 rounded-lg transition-colors cursor-pointer"
             >
-              <span>Visit Live Website</span>
+              <span>{project.liveUrl ? "Visit Live Website" : "Live Address Pending"}</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </button>
 
@@ -246,17 +259,24 @@ export function ProjectModal({ project, onClose, onRequestSimilarProject, onOpen
               </div>
 
               <div className="pt-4 border-t border-neutral-800">
-                <div className="text-xs text-neutral-400 mb-1">Live Web Address</div>
-                <button
-                  onClick={() => {
-                    onClose();
-                    onOpenLiveWebsite(project);
-                  }}
-                  className="text-xs font-mono text-sky-400 hover:underline break-all inline-flex items-center gap-1 text-left cursor-pointer"
-                >
-                  <span>{project.liveUrl}</span>
-                  <ExternalLink className="w-3 h-3 shrink-0" />
-                </button>
+                <div className="text-xs text-neutral-400 mb-1">Live Web Address Reference</div>
+                {project.liveUrl ? (
+                  <button
+                    onClick={() => {
+                      onClose();
+                      onOpenLiveWebsite(project);
+                    }}
+                    className="text-xs font-mono text-sky-400 hover:underline break-all inline-flex items-center gap-1 text-left cursor-pointer"
+                  >
+                    <span>{project.liveUrl}</span>
+                    <ExternalLink className="w-3 h-3 shrink-0" />
+                  </button>
+                ) : (
+                  <div className="text-xs text-amber-300/90 font-mono italic flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                    <span>[Live address will be added here once provided]</span>
+                  </div>
+                )}
               </div>
 
               <div className="pt-4 border-t border-neutral-800">
@@ -265,10 +285,18 @@ export function ProjectModal({ project, onClose, onRequestSimilarProject, onOpen
                     onClose();
                     onRequestSimilarProject(project.name);
                   }}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-slate-900 bg-white rounded-lg hover:bg-neutral-100 transition-colors cursor-pointer"
+                  className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-bold rounded-lg transition-colors cursor-pointer shadow-md ${
+                    project.projectStatus === "completed"
+                      ? "text-slate-900 bg-white hover:bg-neutral-100"
+                      : "text-slate-950 bg-sky-400 hover:bg-sky-300"
+                  }`}
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-slate-900" />
-                  <span>Request Similar Website</span>
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>
+                    {project.projectStatus === "completed"
+                      ? "Request a Salon Website & Dashboard"
+                      : `Request This Build (${project.name})`}
+                  </span>
                 </button>
               </div>
             </div>

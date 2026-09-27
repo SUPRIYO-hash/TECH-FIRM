@@ -13,15 +13,15 @@ export function Hero({ onExploreWork, onStartProject }: HeroProps) {
 
   const previewSites = [
     {
-      name: "Aura Wellness",
-      category: "Salons & Beauty",
+      name: "Salon & Booking Dashboard",
+      category: "Salons & Grooming",
       themeColor: "#0EA5E9",
-      headline: "Holistic Aesthetics & Skin Therapy",
-      subline: "Bespoke clinical treatments curated for cellular radiance.",
-      badge: "Open for Bookings",
-      navItems: ["Treatments", "Pricing", "Book Online"],
-      cta: "Schedule Consultation",
-      tagline: "4.9 Client Rating · Instant Confirmation"
+      headline: "Modern Haircuts, Styling & Real-Time Booking",
+      subline: "Customer appointment booking, stylist calendar, and staff management dashboard.",
+      badge: "Real Studio Project",
+      navItems: ["Haircuts & Styling", "Beard Grooming", "Book Slot", "Staff Schedule"],
+      cta: "Book Appointment / Open Queue",
+      tagline: "Live Client Queue · WhatsApp Notifications"
     },
     {
       name: "Kaviar Bistro",

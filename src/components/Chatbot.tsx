@@ -51,11 +51,11 @@ export function Chatbot({ onNavigateSection, onOpenPricingQuote }: ChatbotProps)
 
     if (actionId === "pricing" || q.includes("price") || q.includes("cost") || q.includes("rate") || q.includes("how much") || q.includes("₹")) {
       const isPromo = isPromotionalOfferActive();
-      let text = `Our standard basic websites start from ₹${SITE_CONFIG.standardStartingPrice.toLocaleString()}. `;
+      let text = `Our minimum website making charge starts from ₹${SITE_CONFIG.standardStartingPrice.toLocaleString()} with an ongoing ₹${SITE_CONFIG.standardMonthlyMaintenance}/month maintenance plan (covering updates, hosting support, and security). `;
       if (isPromo) {
-        text += `Currently, our ${SITE_CONFIG.promotionalOffer.title} is active, offering basic websites starting from ₹${SITE_CONFIG.promotionalOffer.discountedPrice.toLocaleString()} with a free eligible domain on select annual packages. `;
+        text += `Currently, our ${SITE_CONFIG.promotionalOffer.title} is active, offering website setup at ₹${SITE_CONFIG.promotionalOffer.discountedPrice.toLocaleString()} + ₹${SITE_CONFIG.standardMonthlyMaintenance}/month with domain assistance. `;
       }
-      text += "Because each project is tailored, the final quote is based on specific factors: number of pages, custom features (like booking or dynamic menus), integrations, and hosting.";
+      text += "Because each project is tailored, custom multi-page or booking websites are estimated based on specific requirements, pages, and integrations.";
       return {
         text,
         actions: [
@@ -77,7 +77,7 @@ export function Chatbot({ onNavigateSection, onOpenPricingQuote }: ChatbotProps)
 
     if (actionId === "portfolio" || q.includes("work") || q.includes("portfolio") || q.includes("example") || q.includes("samples") || q.includes("salon") || q.includes("restaurant") || q.includes("travel")) {
       return {
-        text: `We have built websites across multiple sectors including Aura Wellness (Salons & Beauty), Kaviar Artisan Bistro (Restaurants & Cafés), Solstice Expeditions (Travel & Tourism), Vanguard Corporate (Business & Advisory), and Elena Rostova (Personal Brands). You can inspect live preview demos and visit their URLs in our Selected Work section.`,
+        text: `We have built websites including our featured Salon Website & Booking Dashboard, Kaviar Artisan Bistro (Restaurants & Cafés), Solstice Expeditions (Travel & Tourism), and Vanguard Corporate (Business & Advisory). You can inspect live preview demos and visit their URLs in our Selected Work section.`,
         actions: [
           { label: "Browse Selected Work", actionId: "view_work" },
           { label: "Request Similar Project", actionId: "contact" },
