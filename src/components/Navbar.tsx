@@ -71,10 +71,10 @@ export function Navbar({ onOpenContact }: NavbarProps) {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+      className={`sticky top-0 z-40 w-full transition-all duration-300 backdrop-blur-xl ${
         isScrolled
-          ? "bg-[#080B11]/90 backdrop-blur-md border-b border-white/[0.08] shadow-lg shadow-black/20 py-3.5"
-          : "bg-transparent border-b border-white/[0.04] py-4 sm:py-5"
+          ? "bg-[#080B11]/75 dark:bg-[#080B11]/75 border-b border-white/[0.08] dark:border-white/[0.08] shadow-lg shadow-black/25 py-3"
+          : "bg-[#080B11]/45 dark:bg-[#080B11]/45 border-b border-white/[0.05] dark:border-white/[0.05] py-3.5 sm:py-4"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
