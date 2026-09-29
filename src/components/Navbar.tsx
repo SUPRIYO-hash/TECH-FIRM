@@ -102,7 +102,7 @@ export function Navbar({ onOpenContact }: NavbarProps) {
           <div className="flex-shrink-0 flex items-center justify-center text-center px-2">
             <a
               href="#home"
-              className="text-base sm:text-xl font-extrabold tracking-tight text-white font-['Syne'] hover:text-sky-400 transition-colors whitespace-nowrap"
+              className="text-base sm:text-xl font-extrabold tracking-tight text-white dark:text-white light:text-slate-900 font-['Syne'] hover:text-sky-500 transition-colors whitespace-nowrap"
               aria-label={`${SITE_CONFIG.brandName} Home`}
             >
               {SITE_CONFIG.brandName}
